@@ -21,6 +21,7 @@ This guide is meant to act as a 0-100 guide to parallelize a containerized appli
 > https://www.python.org/downloads/release/python-3913/
 ---
 ### Install Azure Python SDK Packages
+
 ```bash
 py -m pip install azure-batch
 py -m pip install azure-storage-blob
@@ -28,6 +29,7 @@ py -m pip install azure-identity
 py -m pip install azure-key vault-secrets
 py -m pip install azure-common
 ```
+
 # 1. Break the problem into Parallelizable Tasks
 ## Running the Application:
 Your batch job on Azure must consist of individual tasks, each running asynchronously. 
@@ -71,6 +73,7 @@ The application you're using must run its parameters from environment variables.
 In this script, you copy over files from wherever they are stored to the node, then run them using your app. If any files are really large and stored in a zipped way, it’s best to unzip them here on the node. So they get copied to the node small, then ran.
 
 myapp_wrapper.sh
+
 ```sh
 #!/bin/bash
 cp "${INPUT_PATH}" "."
@@ -78,6 +81,7 @@ cp "${CONFIG_PATH}" "."
 
 exec myapp.exe -i "${INPUT_PATH}" -o "${OUTPUT_PATH}" -c "config.json"
 ```
+
 > INPUT_PATH is the path to the file which contains instructions on the task the node is to run
 
 > OUTPUT_PATH is the path to the file which will export the results of the given task
@@ -91,6 +95,7 @@ exec myapp.exe -i "${INPUT_PATH}" -o "${OUTPUT_PATH}" -c "config.json"
 You'll need to make your dockerfile to set up whatever environment your application requires. You pull from some base image, install whatever packages you need, then run your application. The base image is a docker image which is publically accessable which contains the environment you'll need to run your code. A base image follows the FROM keyword. Base images are availible in dockerhub for almost any environment. 
 
 Here is a straightforward example of a dockerfile which uses the python base image. 
+
 ```docker
 FROM python
 
@@ -99,9 +104,11 @@ COPY hello_world.py /hello_world.py
 
 ENTRYPOINT ["python", "hello_world.py"]
 ```
+
 > More detailed guides on building dockerfiles can be found [here](https://docs.docker.com/engine/reference/builder/)
 
 For our case:
+
 ```docker
 FROM ubuntu:20.04
 RUN apt-get update
@@ -151,10 +158,12 @@ docker push indatascience.azurecr.io/myapp:v0.1
 ```
 
 You will also want to tag the image with the latest tag, then push that as the latest version, this will be the image version that each node will pull.
+
 ```bash
 docker image tag myapp:v0.1 indatascience.azurecr.io/myapp:latest
 docker push indatascience.azurecr.io/myapp:latest
 ```
+
 ---
 
 ## Azure Setup - Storage Account
@@ -206,6 +215,7 @@ To use Azure Batch, you need to perform several actions:
 You can orchestrate these tasks using the Azure Python SDK. These can be part of the same script or broken into different functions. 
 
 These are the imports used for this tutorial:
+
 ```python
 import azure.batch._batch_service_client as batch
 import azure.batch.models as batchmodels
@@ -478,6 +488,7 @@ for inputFile in blob_list:
         batch_client.task.add(job_id, task)
 print(f"Successfully started job: {uuid}")
 ```
+
 ---
 
 ### Monitoring Task Progression
@@ -509,6 +520,7 @@ for a blob in output_blobs:
     print(f"Downloaded {blob.name}")
 print(f"Download completed at: {export_path}")
 ```
+
 ### Merge Results 
 Now you can merge these results, this may be sending them to an SQL server, forwarding them to some application, or producing some other artifact.
 
