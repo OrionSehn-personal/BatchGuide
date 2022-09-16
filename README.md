@@ -528,6 +528,7 @@ After a run has been completed and the data has been pulled. However, the resour
 These artifacts must be cleaned up after you are finished with them; the following code snippet details how you can clear the data associated with a particular job.
 
 > Not cleaning up the azure resources over time can accumulate additional costs, as the Azure Storage Containers incur cost proportional to the amount of stored data. Batch also incurs additional costs. Additionally, Batch resources can have limits on number of pools created, so at some point you may be forced to clean these up.
+
 ```python
 print("Deleting azure storage containers")
 # delete used directories and upload config files/database files
