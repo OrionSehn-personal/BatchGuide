@@ -12,7 +12,9 @@ This guide is meant to act as a 0-100 guide to parallelize a containerized appli
     wsl --install
 ---
 ### Install Docker on Windows
+
 > More detailed directions [here](https://docs.docker.com/desktop/windows/wsl/)
+
 ----
 ### Install Python 3.9
 | At the time of writing the latest microsoft batch supported version python 3.9
