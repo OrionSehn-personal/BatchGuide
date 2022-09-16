@@ -1,4 +1,0 @@
-theme: jekyll-theme-minimal
-title: Parallelizing a Containerized Application on Azure Batch using Python SDK
-description: This guide is meant to act as a 0-100 guide to parallelize a containerized application using the Azure Batch Resource.
-markdown: GFM
