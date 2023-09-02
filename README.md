@@ -1,4 +1,6 @@
 # Parallelizing a Containerized Application on Azure Batch using Python SDK
+>About me: https://orionsehn-personal.github.io/blog/main
+
 This guide is meant to act as a 0-100 guide to parallelize a containerized application using the Azure Batch Resource. We will step through pre-requisites, then break the problem into steps.  
 
 0. Prerequisites
